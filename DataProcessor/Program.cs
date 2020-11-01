@@ -39,15 +39,15 @@ namespace DataProcessor
             ReadLine();
         }
 
-        private static void ProcessDirectory(string directoryPath, string filePath)
+        private static void ProcessDirectory(string directoryPath, string fileType)
         {
-            var fileProcessor = new FileProcessor(filePath);
-            fileProcessor.Process();
+            
         }
 
         private static void ProcessSingleFile(string filePath)
         {
-            throw new NotImplementedException();
+            var fileProcessor = new FileProcessor(filePath);
+            fileProcessor.Process();
         }
     }
 }
