@@ -1,5 +1,6 @@
 ﻿using static System.Console;
 using System.IO;
+using System;
 
 namespace DataProcessor
 {
@@ -49,6 +50,46 @@ namespace DataProcessor
             WriteLine($"Copying {InputFilePath} to {backUpDirectoryPath}");
             File.Copy(InputFilePath, backupFilePath, true);
 
+            // Move to In progress dir
+            Directory.CreateDirectory(Path.Combine(rootDirectoryPath, InProgressDirectoryName));
+            string inProgressFilePath = Path.Combine(rootDirectoryPath, InProgressDirectoryName, inputFileName);
+
+            if (File.Exists(inProgressFilePath))
+            {
+                WriteLine($"ERROR: a file with the name {inProgressFilePath} is already being processed.");
+                return;
+            }
+
+            WriteLine($"Moving {inputFileName} to {inProgressFilePath}");
+            File.Move(InputFilePath, inProgressFilePath);
+
+            // Determine type of file
+            string extesioin = Path.GetExtension(InputFilePath);
+            switch (extesioin)
+            {
+                case ".txt":
+                    ProcessTextFile(inProgressFilePath);
+                    break;
+                default:
+                    WriteLine($"{extesioin} is an unsupported file type");
+                    break;
+            }
+
+            string completedDirectoryPath = Path.Combine(rootDirectoryPath, CompletedDirectoryName);
+            Directory.CreateDirectory(completedDirectoryPath);
+
+            WriteLine($"Moving {inProgressFilePath} to {completedDirectoryPath}");
+            //File.Move(inProgressFilePath, Path.Combine(completedDirectoryPath, inputFileName));
+
+            var completedFileName = $"{Path.GetFileNameWithoutExtension(InputFilePath)}-{Guid.NewGuid()}{extesioin}";
+            var completedFilePath = Path.Combine(completedDirectoryPath, completedFileName);
+            File.Move(inProgressFilePath, completedFilePath); 
+        }
+
+        private void ProcessTextFile(string inProgressFilePath)
+        {
+            WriteLine($"Processing text file {inProgressFilePath}");
+            // Read in and process
         }
     }
 } 

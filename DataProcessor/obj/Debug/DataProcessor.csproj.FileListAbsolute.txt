@@ -4,3 +4,4 @@ C:\Program Files\Learning\Csharp\FilesStreams\FilesDataProcessor\DataProcessor\b
 C:\Program Files\Learning\Csharp\FilesStreams\FilesDataProcessor\DataProcessor\obj\Debug\DataProcessor.csproj.CoreCompileInputs.cache
 C:\Program Files\Learning\Csharp\FilesStreams\FilesDataProcessor\DataProcessor\obj\Debug\DataProcessor.exe
 C:\Program Files\Learning\Csharp\FilesStreams\FilesDataProcessor\DataProcessor\obj\Debug\DataProcessor.pdb
+C:\Program Files\Learning\Csharp\FilesStreams\FilesDataProcessor\DataProcessor\obj\Debug\DataProcessor.csprojAssemblyReference.cache
