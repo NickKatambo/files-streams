@@ -83,7 +83,9 @@ namespace DataProcessor
 
             var completedFileName = $"{Path.GetFileNameWithoutExtension(InputFilePath)}-{Guid.NewGuid()}{extesioin}";
             var completedFilePath = Path.Combine(completedDirectoryPath, completedFileName);
-            File.Move(inProgressFilePath, completedFilePath); 
+            File.Move(inProgressFilePath, completedFilePath);
+
+            string inProgressDirectoryPath = Path.GetDirectoryName(inProgressFilePath);
         }
 
         private void ProcessTextFile(string inProgressFilePath)
