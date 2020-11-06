@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.Caching;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using static System.Console;
 
@@ -10,6 +13,11 @@ namespace DataProcessor
 {
     class Program
     {
+       // private static ConcurrentDictionary<string, string> FilesToProcess = 
+      //    new ConcurrentDictionary<string, string>();
+
+        private static MemoryCache FilesToProcess = MemoryCache.Default;
+
         static void Main(string[] args)
         {
             WriteLine("Parsing command line options");
@@ -39,18 +47,26 @@ namespace DataProcessor
             else
             {
                 WriteLine($"Watching directory {directoryToWatch} for changes");
+
+                ProcessExistingFiles(directoryToWatch);
+
                 using (var inputFileWatcher = new FileSystemWatcher(directoryToWatch))
+                //using(var timer = new Timer(ProcessFiles, null, 0, 1000))
                 {
                     inputFileWatcher.IncludeSubdirectories = false;
                     inputFileWatcher.InternalBufferSize = 32768; // 32 KB
                     inputFileWatcher.Filter = "*.*";
-                    inputFileWatcher.NotifyFilter = NotifyFilters.LastWrite;
+                    inputFileWatcher.NotifyFilter = NotifyFilters.FileName 
+                        | NotifyFilters.LastWrite 
+                        | NotifyFilters.DirectoryName;
 
                     inputFileWatcher.Created += FileCreated;
                     inputFileWatcher.Changed += FileChanged;
                     inputFileWatcher.Deleted += FileDeleted;
                     inputFileWatcher.Renamed += FileRenamed;
                     inputFileWatcher.Error += WatcherError;
+
+                    inputFileWatcher.EnableRaisingEvents = true;
 
                     WriteLine("Press enter to quit.");
                     ReadLine();
@@ -61,9 +77,57 @@ namespace DataProcessor
             ReadLine();
         }
 
+        private static void ProcessExistingFiles(string inputDirectory)
+        {
+            WriteLine($"Checking {inputDirectory} for existing files");
+
+            foreach (var filePath in Directory.EnumerateFiles(inputDirectory))
+            {
+                WriteLine($"  - Found {filePath}");
+                AddToCache(filePath);
+            }
+        }
+
+        private static void ProcessFiles(CacheEntryRemovedArguments args)
+        {
+            WriteLine($"* Cache item removed: {args.CacheItem.Key} because {args.RemovedReason}");
+
+            if (args.RemovedReason == CacheEntryRemovedReason.Expired)
+            {
+                var fileProcessor = new FileProcessor(args.CacheItem.Key);
+                fileProcessor.Process();
+            }
+            else
+            {
+                WriteLine($"WARNING: {args.CacheItem.Key} was removed unexpectedly and may not be avaiable.");
+            }
+
+            /*foreach (var fileName in FilesToProcess.Keys) // May not be in order of adding
+            {
+                if (FilesToProcess.TryRemove(fileName, out _))
+                {
+                    var fileProcessor = new FileProcessor(fileName);
+                    fileProcessor.Process();
+                }
+            }
+            */
+        }
+
+        private static void AddToCache(string fullPath)
+        {
+            var item = new CacheItem(fullPath, fullPath);
+
+            var policy = new CacheItemPolicy
+            {
+                RemovedCallback = ProcessFiles,
+                SlidingExpiration = TimeSpan.FromSeconds(2),
+            };
+            FilesToProcess.Add(item, policy);
+        }
+
         private static void WatcherError(object sender, ErrorEventArgs e)
         {
-            throw new NotImplementedException();
+            WriteLine($"ERROR: file system watching may no longer be active: {e.GetException()}");
         }
 
         private static void FileRenamed(object sender, RenamedEventArgs e)
@@ -79,11 +143,18 @@ namespace DataProcessor
         private static void FileChanged(object sender, FileSystemEventArgs e)
         {
             WriteLine($"* File changed: {e.Name} - type: {e.ChangeType}");
+
+            AddToCache(e.FullPath);
         }
 
         private static void FileCreated(object sender, FileSystemEventArgs e)
         {
             WriteLine($"* File created: {e.Name} - type: {e.ChangeType}");
+            // var fileProcessor = new FileProcessor(e.FullPath);
+            // fileProcessor.Process();
+
+            //FilesToProcess.TryAdd(e.FullPath, e.FullPath);
+            AddToCache(e.FullPath);
         }
 
         private static void ProcessDirectory(string directoryPath, string fileType)
