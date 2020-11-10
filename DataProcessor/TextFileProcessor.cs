@@ -31,7 +31,7 @@ namespace DataProcessor
                 case 2:
                     // Using read all lines
                     string[] lines = File.ReadAllLines(InputFilePath);
-                    if (lines.Length > 2)
+                    if (lines.Length > 1)
                     {
                         lines[1] = lines[1].ToUpperInvariant(); // Assumes there is a line 2 in the file
                         File.WriteAllLines(OutputFilePath, lines);
