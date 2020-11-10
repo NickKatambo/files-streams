@@ -18,12 +18,28 @@ namespace DataProcessor
             OutputFilePath = outPutFilePath;
         }
 
-        public void Process()
+        public void Process(int action)
         {
-            // Using read all text
-            string originalText = File.ReadAllText(InputFilePath);
-            string ProcessedText = originalText.ToUpperInvariant();
-            File.WriteAllText(OutputFilePath, ProcessedText);
+            switch (action)
+            {
+                case 1:
+                    // Using read all text
+                    string originalText = File.ReadAllText(InputFilePath);
+                    string ProcessedText = originalText.ToUpperInvariant();
+                    File.WriteAllText(OutputFilePath, ProcessedText);
+                    break;
+                case 2:
+                    // Using read all lines
+                    string[] lines = File.ReadAllLines(InputFilePath);
+                    if (lines.Length > 2)
+                    {
+                        lines[1] = lines[1].ToUpperInvariant(); // Assumes there is a line 2 in the file
+                        File.WriteAllLines(OutputFilePath, lines);
+                    }
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

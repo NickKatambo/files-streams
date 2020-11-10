@@ -79,8 +79,8 @@ namespace DataProcessor
             {
                 case ".txt":
                     //ProcessTextFile(inProgressFilePath);
-                    var textProcessor = new TextFileProcessor(InputFilePath, completedFilePath);
-                    textProcessor.Process();
+                    var textProcessor = new TextFileProcessor(inProgressFilePath, completedFilePath);
+                    textProcessor.Process(2);
                     break;
                 default:
                     WriteLine($"{extesioin} is an unsupported file type");
