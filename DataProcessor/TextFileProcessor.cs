@@ -37,6 +37,14 @@ namespace DataProcessor
                         File.WriteAllLines(OutputFilePath, lines);
                     }
                     break;
+                case 3:
+                    // Coming soon
+                    using (var inputFileStream = new FileStream(InputFilePath, FileMode.Open))
+                    using (var outputFileStream = new FileStream(OutputFilePath, FileMode.Create))
+                    {
+
+                    }
+                        break;
                 default:
                     break;
             }
