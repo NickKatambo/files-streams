@@ -40,9 +40,16 @@ namespace DataProcessor
                 case 3:
                     // Coming soon
                     using (var inputFileStream = new FileStream(InputFilePath, FileMode.Open))
+                    using (var inputStreamReader = new StreamReader(inputFileStream))
                     using (var outputFileStream = new FileStream(OutputFilePath, FileMode.Create))
+                    using (var outPutStreamWriter = new StreamWriter(outputFileStream))
                     {
-
+                        while (!inputStreamReader.EndOfStream)
+                        {
+                            string line = inputStreamReader.ReadLine();
+                            string processedLine = line.ToUpperInvariant();
+                            outPutStreamWriter.WriteLine(processedLine);
+                        }
                     }
                         break;
                 default:
