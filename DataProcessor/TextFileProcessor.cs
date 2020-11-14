@@ -38,17 +38,32 @@ namespace DataProcessor
                     }
                     break;
                 case 3:
-                    // Coming soon
-                    using (var inputFileStream = new FileStream(InputFilePath, FileMode.Open))
-                    using (var inputStreamReader = new StreamReader(inputFileStream))
-                    using (var outputFileStream = new FileStream(OutputFilePath, FileMode.Create))
-                    using (var outPutStreamWriter = new StreamWriter(outputFileStream))
+                    // ** Simplified version **
+                    //using (var inputFileStream = new FileStream(InputFilePath, FileMode.Open))
+                    //using (var outputFileStream = new FileStream(OutputFilePath, FileMode.Create))
+                    //using (var outPutStreamWriter = new StreamWriter(outputFileStream))
+                    
+                    using (var inputStreamReader = new StreamReader(InputFilePath))
+                    using (var outPutStreamWriter = new StreamWriter(OutputFilePath))
                     {
                         while (!inputStreamReader.EndOfStream)
                         {
-                            string line = inputStreamReader.ReadLine();
+                            /*string line = inputStreamReader.ReadLine();
                             string processedLine = line.ToUpperInvariant();
                             outPutStreamWriter.WriteLine(processedLine);
+                            */
+                            string line = inputStreamReader.ReadLine();
+                            string processedLine = line.ToUpperInvariant();
+                            bool isLastLine = inputStreamReader.EndOfStream;
+
+                            if (isLastLine)
+                            {
+                                outPutStreamWriter.Write(processedLine);
+                            }
+                            else
+                            {
+                                outPutStreamWriter.WriteLine(processedLine);
+                            }
                         }
                     }
                         break;
