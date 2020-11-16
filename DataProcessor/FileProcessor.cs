@@ -80,7 +80,7 @@ namespace DataProcessor
                 case ".txt":
                     //ProcessTextFile(inProgressFilePath);
                     var textProcessor = new TextFileProcessor(inProgressFilePath, completedFilePath);
-                    textProcessor.Process(2);
+                    textProcessor.Process(4);
                     break;
                 case ".data":
                     var binaryProcessor = new BinaryFileProcessor(inProgressFilePath, completedFilePath);

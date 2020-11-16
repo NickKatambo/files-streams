@@ -66,7 +66,41 @@ namespace DataProcessor
                             }
                         }
                     }
-                        break;
+                    break;
+                case 4:
+                    using (var inputStreamReader = new StreamReader(InputFilePath))
+                    using (var outPutStreamWriter = new StreamWriter(OutputFilePath))
+                    {
+                        var currentLineNumber = 1;
+                        while (!inputStreamReader.EndOfStream)
+                        {
+                            string line = inputStreamReader.ReadLine();
+                            if (currentLineNumber == 2)
+                            {
+                                Write(line.ToUpperInvariant());
+                            }
+                            else
+                            {
+                                Write(line);
+                            }
+
+                            currentLineNumber++;
+
+                            void Write(string content)
+                            {
+                                bool isLastLine = inputStreamReader.EndOfStream;
+                                if (isLastLine)
+                                {
+                                    outPutStreamWriter.Write(content);
+                                }
+                                else
+                                {
+                                    outPutStreamWriter.WriteLine(content);
+                                }
+                            }
+                        }
+                    }
+                    break;
                 default:
                     break;
             }
