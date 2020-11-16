@@ -101,6 +101,28 @@ namespace DataProcessor
                         }
                     }
                     break;
+                case 5:
+                    using (FileStream input = File.Open(InputFilePath,FileMode.Open,FileAccess.Read))
+                    using (FileStream output = File.Create(OutputFilePath))
+                    {
+                        const int endOfStream = -1;
+                        int largestByte = 0;
+                        int currentByte = input.ReadByte();
+                        while (currentByte != endOfStream)
+                        {
+                            output.WriteByte((byte)currentByte);
+
+                            if (currentByte > largestByte)
+                            {
+                                largestByte = currentByte;
+                            }
+
+                            currentByte = input.ReadByte();
+                        }
+
+                        output.WriteByte((byte)largestByte);
+                    }
+                    break;
                 default:
                     break;
             }
