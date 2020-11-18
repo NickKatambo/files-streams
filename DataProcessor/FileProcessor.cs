@@ -86,6 +86,10 @@ namespace DataProcessor
                     var binaryProcessor = new BinaryFileProcessor(inProgressFilePath, completedFilePath);
                     binaryProcessor.Process();
                     break;
+                case ".csv":
+                    var csvProcessor = new CsvFileProcessor(InputFilePath, completedFilePath);
+                    csvProcessor.Process();
+                    break;
                 default:
                     WriteLine($"{extesioin} is an unsupported file type");
                     break;

@@ -4,3 +4,13 @@ C:\Program Files\Learning\Csharp\FilesStreams\FilesDataProcessor\DataProcessor\b
 C:\Program Files\Learning\Csharp\FilesStreams\FilesDataProcessor\DataProcessor\obj\Debug\DataProcessor.csproj.CoreCompileInputs.cache
 C:\Program Files\Learning\Csharp\FilesStreams\FilesDataProcessor\DataProcessor\obj\Debug\DataProcessor.exe
 C:\Program Files\Learning\Csharp\FilesStreams\FilesDataProcessor\DataProcessor\obj\Debug\DataProcessor.pdb
+C:\Program Files\Learning\Csharp\FilesStreams\FilesDataProcessor\DataProcessor\obj\Debug\DataProcessor.csprojAssemblyReference.cache
+C:\Program Files\Learning\Csharp\FilesStreams\FilesDataProcessor\DataProcessor\bin\Debug\CsvHelper.dll
+C:\Program Files\Learning\Csharp\FilesStreams\FilesDataProcessor\DataProcessor\bin\Debug\Microsoft.Bcl.AsyncInterfaces.dll
+C:\Program Files\Learning\Csharp\FilesStreams\FilesDataProcessor\DataProcessor\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
+C:\Program Files\Learning\Csharp\FilesStreams\FilesDataProcessor\DataProcessor\bin\Debug\System.Threading.Tasks.Extensions.dll
+C:\Program Files\Learning\Csharp\FilesStreams\FilesDataProcessor\DataProcessor\bin\Debug\CsvHelper.xml
+C:\Program Files\Learning\Csharp\FilesStreams\FilesDataProcessor\DataProcessor\bin\Debug\Microsoft.Bcl.AsyncInterfaces.xml
+C:\Program Files\Learning\Csharp\FilesStreams\FilesDataProcessor\DataProcessor\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
+C:\Program Files\Learning\Csharp\FilesStreams\FilesDataProcessor\DataProcessor\bin\Debug\System.Threading.Tasks.Extensions.xml
+C:\Program Files\Learning\Csharp\FilesStreams\FilesDataProcessor\DataProcessor\obj\Debug\DataProcessor.csproj.CopyComplete
