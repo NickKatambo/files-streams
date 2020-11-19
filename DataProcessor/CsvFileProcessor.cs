@@ -1,4 +1,5 @@
 ﻿using CsvHelper;
+using CsvHelper.Configuration;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -22,13 +23,18 @@ namespace DataProcessor
             using(CsvReader csvReader = new CsvReader((IParser)input))
             {
                 IEnumerable<dynamic> records = csvReader.GetRecord<dynamic>();
-                
+
+                csvReader.Configuration.TrimOptions = TrimOptions.Trim;
+                csvReader.Configuration.Comment = '@'; // Default is #
+                csvReader.Configuration.AllowComments = true;
+                //csvReader.Configuration.IgnoreBlankLines = true;
+
                 foreach (var record in records)
                 {
                     Console.WriteLine(record.OrderNumber);
                     Console.WriteLine(record.CustomerNumber);
                     Console.WriteLine(record.Description);
-                    Console.WriteLine(record.Quatity);
+                    Console.WriteLine(record.Quantity);
 
                 }
             }
