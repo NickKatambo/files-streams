@@ -22,14 +22,17 @@ namespace DataProcessor
             using (StreamReader input = File.OpenText(InputFilePath))
             using(CsvReader csvReader = new CsvReader((IParser)input))
             {
-                IEnumerable<dynamic> records = csvReader.GetRecord<dynamic>();
+                //IEnumerable<dynamic> records = csvReader.GetRecord<dynamic>();
+                IEnumerable<Order> records = (IEnumerable<Order>)csvReader.GetRecord<Order>();
 
                 csvReader.Configuration.TrimOptions = TrimOptions.Trim;
                 csvReader.Configuration.Comment = '@'; // Default is #
                 csvReader.Configuration.AllowComments = true;
                 //csvReader.Configuration.IgnoreBlankLines = true;
+                //csvReader.Configuration.Delimiter = ";";
+                csvReader.Configuration.HasHeaderRecord = false; 
 
-                foreach (var record in records)
+                foreach (Order record in records)
                 {
                     Console.WriteLine(record.OrderNumber);
                     Console.WriteLine(record.CustomerNumber);
