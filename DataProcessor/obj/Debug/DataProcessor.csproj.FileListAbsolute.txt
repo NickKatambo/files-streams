@@ -13,3 +13,4 @@ C:\Program Files\Learning\Csharp\FilesStreams\FilesDataProcessor\DataProcessor\b
 C:\Program Files\Learning\Csharp\FilesStreams\FilesDataProcessor\DataProcessor\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
 C:\Program Files\Learning\Csharp\FilesStreams\FilesDataProcessor\DataProcessor\bin\Debug\System.Threading.Tasks.Extensions.xml
 C:\Program Files\Learning\Csharp\FilesStreams\FilesDataProcessor\DataProcessor\obj\Debug\DataProcessor.csproj.CopyComplete
+C:\Program Files\Learning\Csharp\FilesStreams\FilesDataProcessor\DataProcessor\obj\Debug\DataProcessor.csprojAssemblyReference.cache

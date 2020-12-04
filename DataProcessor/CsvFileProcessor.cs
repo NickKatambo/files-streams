@@ -23,21 +23,22 @@ namespace DataProcessor
             using(CsvReader csvReader = new CsvReader((IParser)input))
             {
                 //IEnumerable<dynamic> records = csvReader.GetRecord<dynamic>();
-                IEnumerable<Order> records = (IEnumerable<Order>)csvReader.GetRecord<Order>();
+                IEnumerable<ProcessedOrder> records = (IEnumerable<ProcessedOrder>)csvReader.GetRecord<ProcessedOrder>();
 
                 csvReader.Configuration.TrimOptions = TrimOptions.Trim;
                 csvReader.Configuration.Comment = '@'; // Default is #
                 csvReader.Configuration.AllowComments = true;
                 //csvReader.Configuration.IgnoreBlankLines = true;
                 //csvReader.Configuration.Delimiter = ";";
-                csvReader.Configuration.HasHeaderRecord = false; 
+                //csvReader.Configuration.HasHeaderRecord = false;
+                //csvReader.Configuration.HeaderValidated = null;
+                //csvReader.Configuration.MissingFieldFound = null;
 
-                foreach (Order record in records)
+                foreach (ProcessedOrder record in records)
                 {
                     Console.WriteLine(record.OrderNumber);
-                    Console.WriteLine(record.CustomerNumber);
-                    Console.WriteLine(record.Description);
-                    Console.WriteLine(record.Quantity);
+                    Console.WriteLine(record.Customer);
+                    Console.WriteLine(record.Amount);
 
                 }
             }
