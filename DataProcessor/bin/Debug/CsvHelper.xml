@@ -1005,9 +1005,9 @@
         <member name="T:CsvHelper.Configuration.ConfigurationFunctions">
             <summary>Holds the default callback methods for delegate members of <c>CsvHelper.Configuration.Configuration</c>.</summary>
         </member>
-        <member name="M:CsvHelper.Configuration.ConfigurationFunctions.HeaderValidated(System.Boolean,System.String[],System.Int32,CsvHelper.ReadingContext)">
+        <member name="M:CsvHelper.Configuration.ConfigurationFunctions.HeaderValidated(CsvHelper.InvalidHeader[],CsvHelper.ReadingContext)">
             <summary>
-            Throws a <see cref="T:CsvHelper.ValidationException"/> if <paramref name="isValid"/> is <c>false</c>.
+            Throws a <see cref="T:CsvHelper.ValidationException"/> if <paramref name="invalidHeaders"/> is not empty.
             </summary>
         </member>
         <member name="M:CsvHelper.Configuration.ConfigurationFunctions.MissingFieldFound(System.String[],System.Int32,CsvHelper.ReadingContext)">
@@ -3708,11 +3708,12 @@
             </summary>
             <param name="type">The type to validate the header against.</param>
         </member>
-        <member name="M:CsvHelper.CsvReader.ValidateHeader(CsvHelper.Configuration.ClassMap)">
+        <member name="M:CsvHelper.CsvReader.ValidateHeader(CsvHelper.Configuration.ClassMap,System.Collections.Generic.List{CsvHelper.InvalidHeader})">
             <summary>
             Validates the header against the given map.
             </summary>
             <param name="map">The map to validate against.</param>
+            <param name="invalidHeaders">List of invalid headers.</param>
         </member>
         <member name="M:CsvHelper.CsvReader.Read">
             <summary>
@@ -5124,44 +5125,35 @@
             Represents a header validation failure.
             </summary>
         </member>
-        <member name="P:CsvHelper.HeaderValidationException.HeaderNames">
+        <member name="P:CsvHelper.HeaderValidationException.InvalidHeaders">
             <summary>
-            Gets the header names that are mapped to a CSV field that couldn't be found.
+            Gets the invalid headers.
             </summary>
         </member>
-        <member name="P:CsvHelper.HeaderValidationException.HeaderNameIndex">
-            <summary>
-            Gets the header name index that is mapped to a CSV field that couldn't be found.
-            The index is used when a CSV header has multiple header names with the same value.
-            </summary>
-        </member>
-        <member name="M:CsvHelper.HeaderValidationException.#ctor(CsvHelper.ReadingContext,System.String[],System.Nullable{System.Int32})">
+        <member name="M:CsvHelper.HeaderValidationException.#ctor(CsvHelper.ReadingContext,CsvHelper.InvalidHeader[])">
             <summary>
             Initializes a new instance of the <see cref="T:CsvHelper.ValidationException"/> class.
             </summary>
             <param name="context">The reading context.</param>
-            <param name="headerNames">The header names that are mapped to a CSV field that couldn't be found.</param>
-            <param name="headerNameIndex">The header name index that is mapped to a CSV field that couldn't be found.</param>
+            <param name="invalidHeaders">The invalid headers.</param>
         </member>
-        <member name="M:CsvHelper.HeaderValidationException.#ctor(CsvHelper.ReadingContext,System.String[],System.Nullable{System.Int32},System.String)">
+        <member name="M:CsvHelper.HeaderValidationException.#ctor(CsvHelper.ReadingContext,CsvHelper.InvalidHeader[],System.String)">
             <summary>
             Initializes a new instance of the <see cref="T:CsvHelper.ValidationException"/> class
             with a specified error message.
             </summary>
             <param name="context">The reading context.</param>
-            <param name="headerNames">The header names that are mapped to a CSV field that couldn't be found.</param>
-            <param name="headerNameIndex">The header name index that is mapped to a CSV field that couldn't be found.</param>
+            <param name="invalidHeaders">The invalid headers.</param>
             <param name="message">The message that describes the error.</param>
         </member>
-        <member name="M:CsvHelper.HeaderValidationException.#ctor(CsvHelper.ReadingContext,System.String[],System.Nullable{System.Int32},System.String,System.Exception)">
+        <member name="M:CsvHelper.HeaderValidationException.#ctor(CsvHelper.ReadingContext,CsvHelper.InvalidHeader[],System.String,System.Exception)">
             <summary>
             Initializes a new instance of the <see cref="T:CsvHelper.ValidationException"/> class
             with a specified error message and a reference to the inner exception that 
             is the cause of this exception.
             </summary>
             <param name="context">The reading context.</param>
-            <param name="headerNames">The header names that are mapped to a CSV field that couldn't be found.</param>
-            <param name="headerNameIndex">The header name index that is mapped to a CSV field that couldn't be found.</param>
+            <param name="invalidHeaders">The invalid headers.</param>
             <param name="message">The error message that explains the reason for the exception.</param>
             <param name="innerException">The exception that is the cause of the current exception, or a null reference (Nothing in Visual Basic) if no inner exception is specified.</param>
         </member>
@@ -5318,6 +5310,21 @@
             </summary>
             <param name="offset">An offset for the raw record end.
             The offset should be less than 1.</param>
+        </member>
+        <member name="T:CsvHelper.InvalidHeader">
+            <summary>
+            Invalid header information.
+            </summary>
+        </member>
+        <member name="P:CsvHelper.InvalidHeader.Names">
+            <summary>
+            Header names mapped to a CSV field that couldn't be found.
+            </summary>
+        </member>
+        <member name="P:CsvHelper.InvalidHeader.Index">
+            <summary>
+            Header name index maped to a CSV field that couldn't be found.
+            </summary>
         </member>
         <member name="T:CsvHelper.IObjectResolver">
             <summary>
@@ -6884,6 +6891,15 @@
             <param name="row">The <see cref="T:CsvHelper.IReaderRow"/> for the current record.</param>
             <param name="memberMapData">The <see cref="T:CsvHelper.Configuration.MemberMapData"/> for the member being created.</param>
             <returns>The object created from the string.</returns>
+        </member>
+        <member name="M:CsvHelper.TypeConversion.EnumConverter.ConvertToString(System.Object,CsvHelper.IWriterRow,CsvHelper.Configuration.MemberMapData)">
+            <summary>
+            Converts the object to a string.
+            </summary>
+            <param name="value">The object to convert to a string.</param>
+            <param name="row">The <see cref="T:CsvHelper.IWriterRow"/> for the current record.</param>
+            <param name="memberMapData">The <see cref="T:CsvHelper.Configuration.MemberMapData"/> for the member being written.</param>
+            <returns>The string representation of the object.</returns>
         </member>
         <member name="T:CsvHelper.TypeConversion.EnumerableConverter">
             <summary>
