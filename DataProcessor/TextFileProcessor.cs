@@ -1,21 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
+using System.IO.Abstractions;
 
 namespace DataProcessor
 {
     public class TextFileProcessor
     {
+        private readonly IFileSystem _fileSystem;
+
         public string InputFilePath { get; }
         public string OutputFilePath { get; }
 
         public TextFileProcessor(string inputFilePath, string outPutFilePath)
+            : this(inputFilePath, outPutFilePath, new FileSystem())
+        {
+        }
+
+        public TextFileProcessor(string inputFilePath, string outPutFilePath, IFileSystem fileSystem)
         {
             InputFilePath = inputFilePath;
             OutputFilePath = outPutFilePath;
+            _fileSystem = fileSystem;
         }
 
         public void Process(int action)
